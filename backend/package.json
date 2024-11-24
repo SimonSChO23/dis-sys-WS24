@@ -1,0 +1,18 @@
+{
+  "name": "dis-sys-ws24",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000d\u0000i\u0000s\u0000-\u0000s\u0000y\u0000s\u0000-\u0000W\u0000S\u00002\u00004\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dis-sys-ws24": "file:",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-dist": "^5.18.2",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
