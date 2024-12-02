@@ -22,11 +22,6 @@ const requestHandler = async (req, res) => {
             // Abrufen aller Shopping-Items
             sendJsonResponse(res, 200, dataStore);
 
-        } else if (path.startsWith('/api/shopping/') && method === 'GET') {
-            // Abrufen eines Shopping-Items nach Name
-            const name = decodeURIComponent(path.split('/').pop());
-            sendJsonResponse(res, 200, dataStore);
-
         } else if (path === '/api/shopping' && method === 'POST') {
             // Hinzufügen oder Aktualisieren eines Shopping-Items
             let body = '';
@@ -38,32 +33,32 @@ const requestHandler = async (req, res) => {
                 sendJsonResponse(res, 201, newItem);
             });
 
-        }/* else if (path.startsWith('/api/shopping/') && method === 'PUT') {
+        } else if (path.startsWith('/api/shopping/') && method === 'PUT') {
             // Aktualisieren eines existierenden Shopping-Items
             const name = decodeURIComponent(path.split('/').pop());
             let body = '';
             req.on('data', chunk => (body += chunk));
             req.on('end', async () => {
                 const { amount } = JSON.parse(body);
-                const result = await pool.query('UPDATE shopping_items SET amount = $1 WHERE name = $2 RETURNING *', [
-                    amount,
-                    name,
-                ]);
+                const index = dataStore.findIndex((i) => i.name === name);
 
-                if (result.rows.length > 0) {
-                    sendJsonResponse(res, 200, result.rows[0]);
+                if (index !== -1) {
+                    dataStore[index] = { ...dataStore[index], ...{ name, amount} };
+                    sendJsonResponse(res, 200, dataStore[index]);
                 } else {
                     sendJsonResponse(res, 404, { message: 'Item nicht gefunden' });
                 }
             });
 
-        }*/ else if (path.startsWith('/api/shopping/') && method === 'DELETE') {
+        } else if (path.startsWith('/api/shopping/') && method === 'DELETE') {
             // Löschen eines Shopping-Items
             const name = decodeURIComponent(path.split('/').pop());
-            const result = await pool.query('DELETE FROM shopping_items WHERE name = $1 RETURNING *', [name]);
+            const index = dataStore.findIndex((i) => i.name === name);
 
-            if (result.rows.length > 0) {
-                res.writeHead(204).end();
+            if (index !== -1) {
+                const deletedItem = dataStore.splice(index, 1);
+                
+                sendJsonResponse(res, 200, deletedItem[0]);
             } else {
                 sendJsonResponse(res, 404, { message: 'Item nicht gefunden' });
             }
