@@ -11,8 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "dis-sys-ws24": "file:",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-dist": "^5.18.2",
-    "swagger-ui-express": "^5.0.1"
+    "pg": "^8.13.1"
   }
 }

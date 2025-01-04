@@ -1,20 +1,26 @@
 version: '3.8'
 
 services:
-  #backend:
+  shoppingdb:
+    image: postgres
+    environment:
+      POSTGRES_USER: hse24
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: shoppingdb
+    ports:
+      - "5432:5432"
   backendnode:
     image: backend:v1
     build:
       context: ./backend
       dockerfile: Dockerfile
+    depends_on:
+      - shoppingdb
     ports:
       - "8080:8080"
     restart: always
   frontendflask:
     image: maeddes/frontendflask:hse24
-    #build:
-    #  context: ./frontendflask # Assuming your frontend is in the 'frontend' directory
-    #  dockerfile: Dockerfile
     environment:
       API_URL: "http://backendnode:8080/api/shopping" # Use the API URL for communication between containers
     ports:

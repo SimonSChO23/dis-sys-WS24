@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 8080
 
 # Anwendung starten
-CMD ["node", "adjusted_backend.js"]
+CMD ["node", "backend_file.js"]
