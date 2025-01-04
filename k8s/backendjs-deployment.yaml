@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: backendjs
+  labels:
+    app: backendjs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backendjs
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: backendjs
+    spec:
+      containers:
+      - name: backendjs
+        image: sdev1/backend:1.0
+        imagePullPolicy: Always
+        env:
+        - name: NODE_DATASOURCE_URL
+          value: jdbc:postgresql://shoppingdb:5432/shoppingdb
